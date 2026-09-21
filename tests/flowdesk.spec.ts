@@ -10,7 +10,8 @@ test.describe.serial('FlowDesk 完整链路',()=>{
 
 test('1440px 桌面视觉与控制台验证',async({page})=>{
  const errors:string[]=[]; page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
- for(const path of ['/','/workflows/wf-1','/monitor']){await page.goto(path);await page.waitForTimeout(250);const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth);expect(overflow,`${path} 不应横向溢出`).toBeFalsy()}
+ for(const path of ['/','/workflows/wf-1','/monitor','/delegations','/workflows/wf-1/preview']){await page.goto(path);await page.waitForTimeout(250);const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth);expect(overflow,`${path} 不应横向溢出`).toBeFalsy()}
+ await page.goto('/delegations'); await page.screenshot({path:'test-results/delegations-1440.png',fullPage:true});
  await page.goto('/'); await page.screenshot({path:'test-results/dashboard-1440.png',fullPage:true});
  expect(errors,'浏览器 console 不应出现 error').toEqual([]);
 });

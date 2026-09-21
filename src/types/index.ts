@@ -8,3 +8,8 @@ export interface Version {version:number;createdAt:string;note:string;nodes:Flow
 export interface Workflow {id:string;name:string;domain:string;status:WorkflowStatus;version:number;editor:string;updatedAt:string;publishedAt?:string;abnormalCount:number;nodes:FlowNode[];edges:FlowEdge[];versions:Version[]}
 export interface Instance {id:string;workflowId:string;applicant:string;domain:string;currentNode:string;status:'abnormal'|'timeout'|'running'|'completed';submittedAt:string;duration:string;risk:'high'|'medium'|'low';timeline:{title:string;time:string;status:string}[]}
 export interface ValidationIssue {nodeId:string;level:'error'|'warning';message:string}
+export type DelegationStatus='active'|'revoked';
+export interface Delegation {id:string;delegator:string;delegatee:string;domain:string;startAt:string;endAt:string;reason:string;status:DelegationStatus;createdAt:string;revokedAt?:string}
+export type DelegationRule='时段重叠'|'循环委托链'|'禁止委托本人';
+export interface DelegationConflict {rule:DelegationRule;message:string;delegation?:Delegation;chain?:Delegation[]}
+export interface ApprovalSignature {id:string;instanceId:string;nodeLabel:string;nominalApprover:string;signer:string;signedAt:string;delegationIds:string[]}
